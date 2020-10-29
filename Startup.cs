@@ -72,7 +72,11 @@ namespace HealthEquity
                 c.RoutePrefix = "swagger";
             });
             app.UseHttpsRedirection();
-
+            using(var srvc = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = srvc.ServiceProvider.GetService<HealthEquityDbContext>();
+                context.Database.Migrate();
+            }
             app.UseRouting();
 
             app.UseAuthorization();

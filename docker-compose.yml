@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  healthequity:
+    image: ${DOCKER_REGISTRY-}healthequity
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+   db-server:
+    image:"microsoft/mssql-server-windows-express"
+    environment: 
+          sa_password:"someTest!"
+          ACCEPT_EULA:"Y"
+    ports:"1433:1433"
+        
